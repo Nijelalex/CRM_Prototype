@@ -1,0 +1,811 @@
+<html>
+	<head>
+		<title>CRM Prototype</title>
+		<style>
+			.error {
+				color: red;
+				}
+			#bannertitle{height: 35px; background: black;}	
+			#mdxlogo{float: left; height: 30px; margin-bottom:5px; padding:2px;}
+            .statsbox:hover {
+    background-color: rgb(226,234,241) !important;
+}
+			#marquee{
+				font-weight: bold;
+				color:white;
+				font-size:12px;
+			}
+
+            #image-selector{
+                height:200px;
+                width:735px;;
+                border: medium #ddd solid;
+            }
+
+			#selected-image{
+			margin:10px;
+			
+			border: medium red solid;
+			box-shadow: 5px 10px #ddd;
+			}
+
+            .btn-primary:hover {    
+            box-shadow: 1px 2px 2px 2px black;
+            }
+
+			#bannerheader{
+			color: white;
+			font-weight: bold;
+			float: left;
+			padding: 6px;
+			font-size: 15px;	
+			}
+
+
+			.predict-button{
+			transition-duration: 0.4s;
+			 background-color: #f44336;
+			  color: white;
+			  border-radius:2px;
+			  border: 1px solid black;
+			  padding:5px;
+			  z-index:200;
+			  margin:5px;
+			  
+			  border-radius:5px;
+			  font-size: 12px;
+			  width: 140px;
+			}
+
+			.predict-button:hover {
+			background-color: black;
+			}
+			#leftdiv{
+			float:left;
+			width:30vw;
+			border: medium #ddd solid;
+			height:85vh;
+			}
+			#rightdiv{
+			float:left;
+			width:65vw;
+			border: medium #ddd solid;
+			}
+			#headerdiv{
+			background-image: linear-gradient(#F98E86, #f44336);
+			color:white;
+			font-weight:bold;
+			text-align: center;
+			margin:5px;
+			
+			padding:2px;
+			border: thin #ddd solid;
+			}
+			
+			#statusdiv{
+			font-weight: bold;
+			margin-left:5px;
+			}
+			
+			
+			.loader{
+			position: fixed;
+			  left: 0px;
+			  top: 0px;
+			  width: 100%;
+			  height: 100%;
+			  z-index: 9999;
+			  background: url("{{url_for('static', filename='/img/Spinner-2.gif')}}") 
+						  50% 50% no-repeat rgba(0,0,0,0.5);
+			/* display: none;			 */
+			}
+			#uploadtext{
+			padding:3px;
+			font-weight: bold;
+			font-size:16px;
+			background: rgb(100,100,100);
+			color: white;
+			}
+
+            .odd{
+                background-color: white !important;
+            }
+			
+			#tableflask th {
+			font-family: Lato-Bold;
+			font-size: 15px;
+			color: #fff;
+			line-height: 1.4;
+			background-color: rgb(100,100,100);
+			}
+
+			#tableflask td{
+			font-size:12px;
+			font-weight: bold;
+			padding:2px;
+			}
+
+			#tableflask{
+			border: medium solid black;
+			border-radius: 10px;
+
+			}
+
+			#tableflask tbody tr:nth-child(even) {
+				background-color: antiquewhite;
+			}
+
+            .tablehead {
+            background-color: #26abff !important;
+            color:white;
+
+            }
+
+            div.opacity-provider
+            {
+                display:none;
+                top:0;
+                left:0;
+                min-width:100%;
+                min-height:100%;/*these make the opacity provider fill the screen*/
+                opacity:0.4;
+                filter:alpha(opacity=50);  
+                position:fixed;
+                background:black;
+            z-index:100;  
+            }
+
+            .dataTables_filter{
+                margin-bottom: 2px;
+            }
+
+            div.popup-data
+            {
+                width:65%;
+                
+                display:none;
+                    background:white;
+                z-index:101;   /*must be greater than the opacity provider*/   
+                position:fixed;  
+                top:100px; 
+                left:25%; /*centers the div*/
+            }
+            #popdetails
+            {
+                text-align: center;
+                color: #009CFF !important;
+                font-weight: 600;
+                font-size: 18px;
+            }
+            #close
+            {
+                float: right;
+                margin-top: -30px;
+                margin-right: 5px;
+
+            }
+            #statusid, #leadtext{
+                font-size: 12px;
+            }
+
+            .tableauPlaceholder{
+                height:350px !important;
+            }
+            #rightbox{
+                background: var(--light);
+                border: medium #ddd solid;
+                height:260px;
+            }
+            #bi_dashboard{
+
+                border: medium #ddd solid;
+
+            }
+            #updatedb{
+                margin-top:5px;
+                
+            }
+            .interested{
+                background-color: green;
+            }
+            .unreachable{
+                background-color: yellow;
+            }
+            .rate{
+                background-color: yellow;
+            }
+            .rejected{
+                background-color: #f44336;
+            }
+            .statusround{
+                margin-right: 5px;
+                border-radius: 50%;
+                display: inline-block;
+                width: 10px;
+                height: 10px;
+                vertical-align: middle;
+            }
+		</style>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+		
+		<!-- Icon Font Stylesheet -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+
+		
+		<!-- Customized Bootstrap Stylesheet -->
+		<link href="{{url_for('static', filename='/css/bootstrap.min.css')}}" rel="stylesheet">
+	
+		<!-- Template Stylesheet -->
+		<link href="{{url_for('static', filename='/css/style.css')}}" rel="stylesheet">
+		<!-- JavaScript Libraries -->
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        
+        <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" language="javascript" src=" https://cdn.datatables.net/buttons/1.5.4/js/dataTables.buttons.min.js"></script>
+        <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+        <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+        <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.4/js/buttons.html5.min.js"></script>
+        <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.4/js/buttons.print.min.js"></script>
+        
+
+        <script type="text/javascript"  src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <link href="http://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet">
+        
+	
+		<!-- Template Javascript -->
+		<script src="{{url_for('static', filename='/js/main.js')}}"></script>
+	</head>
+
+	<body>
+		
+		<div class="loader"></div>
+		<div class="popup popup-data">
+            <div id="popdetails">CUSTOMER DETAILS</div>
+            <a href="#" id="close">x</a> 
+            <div style="font-weight: 600; padding: 5px;">Customer Number : <span id="custname"></span></div>   
+            <div style="width:75%; float: left;"><div style="text-align: center;"><img id="image-selector" src=""></div>
+            <div style="font-size:9px; text-align: right;"> * The <span style="color: rgb(255,13,87)">red</span> signifies positive impact on conversion and <span style="color: rgb(30,136,229)">blue</span>, negative impact</div>
+                <div id="bi_dashboard">
+                    <div class='tableauPlaceholder' id='viz1661978434209' style='position: relative; height:330px'><noscript><a href='#'><img
+                                    alt='Dashboard 1 '
+                                    src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Th&#47;ThesisDoc&#47;Dashboard1&#47;1_rss.png'
+                                    style='border: none' /></a></noscript><object class='tableauViz' style='display:none;'>
+                            <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+                            <param name='embed_code_version' value='3' />
+                            <param name='site_root' value='' />
+                            <param name='name' value='ThesisDoc&#47;Dashboard1' />
+                            <param name='tabs' value='no' />
+                            <param name='toolbar' value='yes' />
+                            <param name='static_image'
+                                value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Th&#47;ThesisDoc&#47;Dashboard1&#47;1.png' />
+                            <param name='animate_transition' value='yes' />
+                            <param name='display_static_image' value='yes' />
+                            <param name='display_spinner' value='yes' />
+                            <param name='display_overlay' value='yes' />
+                            <param name='display_count' value='yes' />
+                            <param name='language' value='en-US' />
+                            <param name='filter' value='Customer=110008385' />
+                        </object></div>
+                    <script
+                        type='text/javascript'>                    var divElement = document.getElementById('viz1661978434209'); var vizElement = divElement.getElementsByTagName('object')[0]; if (divElement.offsetWidth > 800) { vizElement.style.width = '1000px'; vizElement.style.height = '477px'; } else if (divElement.offsetWidth > 500) { vizElement.style.width = '1000px'; vizElement.style.height = '477px'; } else { vizElement.style.width = '100%'; vizElement.style.height = '777px'; } var scriptElement = document.createElement('script'); scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js'; vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+                </div>
+                </div>
+                <div id="rightbox" style="width:25%; float: right;">
+                    
+                    <div style="color: black; font-weight: bold;">Lead Feedback</div>
+                    <div id="status">Status</div>
+                    <div id="statusdrop">
+                        <select name="statusselect" id="statusid">
+                            <option value="interested">Customer Interested</option>
+                            <option value="rate">Customer will buy for better rate</option>
+                            <option value="rejected">Customer Rejected</option>
+                            <option value="unreachable">Customer Not Reachable</option>
+                          </select>
+                    </div>
+                    <div id="description">Description</div>
+                    <textarea id="leadtext" name="leaddesc" rows="4" cols="50" style="width:240px;"></textarea>
+                    <div style="text-align:center;"><button id="updatedb" class="btn btn-sm btn-primary btn-lead">Update Lead Status</button></div>
+                </div>
+        </div>
+        
+        <div class="popup opacity-provider">
+        
+        </div>
+        
+        <div id="bannertitle"><img id="mdxlogo" title="Middlesex University Dubai" alt="Middlesex University Dubai" src="https://mdxdubai.blob.core.windows.net/prod/images/default-source/MDX-logos/mdx-dubai.png?sfvrsn=7e7d2301_2" data-displaymode="Original" oncontextmenu="return false;">
+		<div id="bannerheader">CST 4090 - Thesis <span id="marquee"> - Propensity Modelling in BFSI Industry – Lead generation for efficient Product Campaigns</span></div></div>
+		<div class="container-xxl position-relative bg-white d-flex p-0">
+		<div id="spinner" class="bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+		
+			<div class="sidebar pe-4 pb-3">
+			<nav class="navbar bg-light navbar-light">
+                <a href="#" class="navbar-brand mx-4 mb-3">
+                    <h3 class="text-primary">CRM Dashboard</h3>
+                </a>
+                <div class="d-flex align-items-center ms-4 mb-4">
+                    <div class="position-relative">
+                        <img class="rounded-circle" src="{{url_for('static', filename='/img/CRMUser.jpg')}}" alt="" style="width: 40px; height: 40px;">
+                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                    </div>
+                    <div class="ms-3">
+                        <h6 class="mb-0">Nijel Alex</h6>
+                        <span>Admin</span>
+                    </div>
+                </div>
+                <div class="navbar-nav w-100">
+                    <a href="#" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="#" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>
+                </div>
+            </nav>
+			</div>
+
+		
+        <!-- Content Start -->
+        <div class="content">
+            <!-- Navbar Start -->
+            <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+                <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+                    <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
+                </a>
+                <a href="#" class="sidebar-toggler flex-shrink-0">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <form class="d-none d-md-flex ms-4">
+                    <input class="form-control border-0" type="search" placeholder="Search">
+                </form>
+                <div class="navbar-nav align-items-center ms-auto">
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <i class="fa fa-envelope me-lg-2"></i>
+                            <span class="d-none d-lg-inline-flex">Message</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">
+                                <div class="d-flex align-items-center">
+                                    <img class="rounded-circle" src="{{url_for('static', filename='/img/CRMUser.jpg')}}" alt="" style="width: 40px; height: 40px;">
+                                    <div class="ms-2">
+                                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                        <small>15 minutes ago</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item">
+                                <div class="d-flex align-items-center">
+                                    <img class="rounded-circle" src="{{url_for('static', filename='/img/CRMUser.jpg')}}" alt="" style="width: 40px; height: 40px;">
+                                    <div class="ms-2">
+                                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                        <small>15 minutes ago</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item">
+                                <div class="d-flex align-items-center">
+                                    <img class="rounded-circle" src="{{url_for('static', filename='/img/CRMUser.jpg')}}" alt="" style="width: 40px; height: 40px;">
+                                    <div class="ms-2">
+                                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                        <small>15 minutes ago</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item text-center">See all message</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <i class="fa fa-bell me-lg-2"></i>
+                            <span class="d-none d-lg-inline-flex">Notification</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">
+                                <h6 class="fw-normal mb-0">Profile updated</h6>
+                                <small>15 minutes ago</small>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item">
+                                <h6 class="fw-normal mb-0">New user added</h6>
+                                <small>15 minutes ago</small>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item">
+                                <h6 class="fw-normal mb-0">Password changed</h6>
+                                <small>15 minutes ago</small>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item text-center">See all notifications</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <img class="rounded-circle me-lg-2" src="{{url_for('static', filename='/img/CRMUser.jpg')}}" alt="" style="width: 40px; height: 40px;">
+                            <span class="d-none d-lg-inline-flex">Nijel Alex</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">My Profile</a>
+                            <a href="#" class="dropdown-item">Settings</a>
+                            <a href="#" class="dropdown-item">Log Out</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <!-- Navbar End -->
+
+			
+            <!-- Sale & Revenue Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4 statsbox">
+                            <i class="fa fa-chart-line fa-3x text-primary"></i>
+                            <div class="ms-3">
+                                <p class="mb-2">Sales (Today)</p>
+                                <h6 class="mb-0">$1234</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4 statsbox">
+                            <i class="fa fa-chart-bar fa-3x text-primary"></i>
+                            <div class="ms-3">
+                                <p class="mb-2">Sales MTD</p>
+                                <h6 class="mb-0">$1234</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4 statsbox">
+                            <i class="fa fa-chart-area fa-3x text-primary"></i>
+                            <div class="ms-3">
+                                <p class="mb-2">Revenue (Today)</p>
+                                <h6 class="mb-0">$1234</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4 statsbox">
+                            <i class="fa fa-chart-pie fa-3x text-primary"></i>
+                            <div class="ms-3">
+                                <p class="mb-2">Revenue MTD</p>
+                                <h6 class="mb-0">$1234</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+				<div style="font-size:10px;">* Dummy Numbers</div>
+            </div>
+            <!-- Sale & Revenue End -->
+
+            <!-- Recent Sales Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">Term Deposit campaign</h6>
+                        
+                    </div>
+                    <div class="table-responsive">
+                        <table id="myTable" class="table text-start align-middle table-bordered table-hover mb-0">
+                            <thead>
+                                <tr class="text-dark">
+                                    <th class="tablehead" scope="col">Customer Number</th>
+                                    <th class="tablehead" scope="col">Default</th>
+                                    <th class="tablehead" scope="col">Housing</th>
+                                    <th class="tablehead" scope="col">Loan</th>
+                                    <th class="tablehead" scope="col">Score</th>
+                                    <th class="tablehead" scope="col">Status</th>
+                                    <th class="tablehead" scope="col">Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for input in crm_input %}
+                                <tr class="{{ loop.cycle('odd', 'even') }}">
+                                    <td>{{ input[0] }}</td>
+                                    <td>{{ input[7] }}</td>
+                                    <td>{{ input[8] }}</td>
+                                    <td>{{ input[9] }}</td>
+                                    <td>{{ '%0.4f'| format(input[2]|float) }}</td>
+                                    <td title="{{ input[25] }}" id="td-{{ input[0] }}"><span class="{{ input[26] }} statusround">&nbsp;</span>{{ input[24] }}</td>
+                                    <td><button id="{{ input[0] }}-button" class="btn btn-sm btn-primary btn-details">Show Details</button></td>
+                                
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- Recent Sales End -->
+
+
+            <!-- Widgets Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-12 col-md-6 col-xl-4">
+                        <div class="h-100 bg-light rounded p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <h6 class="mb-0">Messages</h6>
+                                <a href="">Show All</a>
+                            </div>
+                            <div class="d-flex align-items-center border-bottom py-3">
+                                <img class="rounded-circle flex-shrink-0" src="{{url_for('static', filename='/img/CRMUser.jpg')}}" alt="" style="width: 40px; height: 40px;">
+                                <div class="w-100 ms-3">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-0">Jhon Doe</h6>
+                                        <small>15 minutes ago</small>
+                                    </div>
+                                    <span>Short message goes here...</span>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center border-bottom py-3">
+                                <img class="rounded-circle flex-shrink-0" src="{{url_for('static', filename='/img/CRMUser.jpg')}}" alt="" style="width: 40px; height: 40px;">
+                                <div class="w-100 ms-3">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-0">Jhon Doe</h6>
+                                        <small>15 minutes ago</small>
+                                    </div>
+                                    <span>Short message goes here...</span>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center border-bottom py-3">
+                                <img class="rounded-circle flex-shrink-0" src="{{url_for('static', filename='/img/CRMUser.jpg')}}" alt="" style="width: 40px; height: 40px;">
+                                <div class="w-100 ms-3">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-0">Jhon Doe</h6>
+                                        <small>15 minutes ago</small>
+                                    </div>
+                                    <span>Short message goes here...</span>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center pt-3">
+                                <img class="rounded-circle flex-shrink-0" src="{{url_for('static', filename='/img/CRMUser.jpg')}}" alt="" style="width: 40px; height: 40px;">
+                                <div class="w-100 ms-3">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-0">Jhon Doe</h6>
+                                        <small>15 minutes ago</small>
+                                    </div>
+                                    <span>Short message goes here...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-xl-4">
+                        <div class="h-100 bg-light rounded p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0">Calender</h6>
+                                <a href="">Show All</a>
+                            </div>
+                            <div id="calender"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-xl-4">
+                        <div class="h-100 bg-light rounded p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0">To Do List</h6>
+                                <a href="">Show All</a>
+                            </div>
+                            <div class="d-flex mb-2">
+                                <input class="form-control bg-transparent" type="text" placeholder="Enter task">
+                                <button type="button" class="btn btn-primary ms-2">Add</button>
+                            </div>
+                            <div class="d-flex align-items-center border-bottom py-2">
+                                <input class="form-check-input m-0" type="checkbox">
+                                <div class="w-100 ms-3">
+                                    <div class="d-flex w-100 align-items-center justify-content-between">
+                                        <span>Short task goes here...</span>
+                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center border-bottom py-2">
+                                <input class="form-check-input m-0" type="checkbox">
+                                <div class="w-100 ms-3">
+                                    <div class="d-flex w-100 align-items-center justify-content-between">
+                                        <span>Short task goes here...</span>
+                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center border-bottom py-2">
+                                <input class="form-check-input m-0" type="checkbox" checked>
+                                <div class="w-100 ms-3">
+                                    <div class="d-flex w-100 align-items-center justify-content-between">
+                                        <span><del>Short task goes here...</del></span>
+                                        <button class="btn btn-sm text-primary"><i class="fa fa-times"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center border-bottom py-2">
+                                <input class="form-check-input m-0" type="checkbox">
+                                <div class="w-100 ms-3">
+                                    <div class="d-flex w-100 align-items-center justify-content-between">
+                                        <span>Short task goes here...</span>
+                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center pt-2">
+                                <input class="form-check-input m-0" type="checkbox">
+                                <div class="w-100 ms-3">
+                                    <div class="d-flex w-100 align-items-center justify-content-between">
+                                        <span>Short task goes here...</span>
+                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Widgets End -->
+
+
+            <!-- Footer Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-light rounded-top p-4">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 text-center text-sm-start">
+                            &copy; <a href="#">Your Site Name</a>, All Right Reserved. 
+                        </div>
+                        <div class="col-12 col-sm-6 text-center text-sm-end">
+                            <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                            Designed By <a href="https://htmlcodex.com">HTML Codex</a>
+                        </br>
+                        Distributed By <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer End -->
+        </div>
+		<!--Content End-->
+	 <!-- Back to Top -->
+	 <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>	
+	</div>
+
+	</body>
+
+<script>
+    $(document).ready(function(){
+        $('#myTable').dataTable(
+        {   
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'collection',
+                    text: 'Export',
+                    buttons: [
+                        'copy',
+                        'excel',
+                        'csv',
+                        'pdf',
+                        'print'
+                    ]
+                }
+            ],
+            order: [[4, 'desc'],[0, 'asc']],
+        }
+        );
+        $('.loader').hide();
+    });
+</script> 
+<script>
+    $(document).ready(function(){
+        $("#close").click(function() {
+        $("div.popup").hide();
+        return false;
+    });
+    });
+</script> 
+
+<script>
+    let base64Image;
+    $("#image-selector").change(function() {
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            let dataURL = reader.result;
+            $('#selected-image').attr("src", dataURL);
+            base64Image = dataURL.replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
+            console.log(base64Image);
+        }
+        reader.readAsDataURL($("#image-selector")[0].files[0]);
+        $("#result").text("");
+        $("#probability").text("");
+
+    });
+
+    $(".btn-details").click(function(){
+            let message = "Details Invoked"
+        
+        cif=$(this).attr('id');
+        cif=cif.split("-")[0]
+        $("#custname").text(cif);
+        $("div.popup").show();
+        $(".loader").show();
+        check=$(".tableauViz").attr('src');
+        detstatus=$("#td-" + cif).text();
+        detdescription=$("#td-" + cif).prop('title');
+        
+        
+        $.post(document.location.origin + "/details", JSON.stringify(cif), function(response){
+            // alert('Shap Generated') 
+            // console.log(response);
+            newsrc="data:image/png;base64," + response
+	 		$('#image-selector').attr("src", newsrc);
+            check=$(".tableauViz").attr('src');
+            detstatus=detstatus.substring(1);
+            $("#statusid option:contains(" + detstatus + ")").attr('selected', 'selected');
+            console.log(detstatus);
+            $('#leadtext').val(detdescription);
+            url=check;
+
+
+            
+            newurl=updateQueryStringParameter(check, 'Customer', cif)
+            $(".tableauViz").attr('src',newurl);    
+            $(".loader").hide();
+        });
+    });
+
+
+    function updateQueryStringParameter(uri, key, value) {  
+            if (uri==undefined)
+            {
+                uri="http://public.tableau.com/views/ThesisDoc/Dashboard1?:embed=y&:showVizHome=no&:host_url=https%3A%2F%2Fpublic.tableau.com%2F&:embed_code_version=3&:tabs=no&:toolbar=yes&:animate_transition=yes&:display_static_image=no&:display_spinner=no&:display_overlay=yes&:display_count=yes&:language=en-US&Customer=110008385&:loadOrderID=0"
+
+            }
+            var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+            var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+            if (uri.match(re)) {
+                return uri.replace(re, '$1' + key + "=" + value + '$2');
+            }
+            else {
+                return uri + separator + key + "=" + value;
+            }
+        }
+	
+
+        $(".btn-lead").click(function(){
+            let obj = new Object
+            obj.status=$('#statusid option:selected').text();
+            obj.details=$("#leadtext").val();
+            obj.customer=$("#custname").text()
+        
+        
+        $.post(document.location.origin + "/lead", JSON.stringify(obj), function(response){
+            $("div.popup").hide();
+            alert('Lead details are updated!')
+        });
+    });
+	// $("#edge-button").click(function(){
+    //         let message = {
+    //         image: base64Image
+    //     }
+	// 	$('.loader').show()
+	// 	$('#statusdiv').html('6 Edge Detections Performed (Sobel, Canny, Laplace, Prewitt, Robert,Scharr)');
+    //     console.log(message);
+    //     $.post(document.location.origin + "/edge", JSON.stringify(message), function(response){
+	// 	$('.loader').hide()	
+	// 	console.log(response);
+	// 		newsrc="data:image/png;base64," + response
+	// 		$('#result-image').attr("src", newsrc);
+			
+    //     });
+    // });
+	
+	
+</script>
+
+</html>
