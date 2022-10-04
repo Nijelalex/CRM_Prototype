@@ -10,7 +10,7 @@ Jinja2==2.9.6
 Mako==1.0.6
 packaging==16.8
 psycopg2==2.7.1
-pyparsing==2.2.0
+pyparsing
 python-editor==1.0.3
 six==1.10.0
 SQLAlchemy==1.1.9
