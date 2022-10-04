@@ -62,7 +62,7 @@ def index():
 def details():
 	print('details')
 	cif = request.get_json(force=True)
-	fit_model=pd.read_pickle(r'D:/University/CST4090 - Thesis/Propensity Model/thesis-propensity-model/data/06_models/fit_model.pkl')
+	fit_model=pd.read_pickle('model/fit_model.pkl')
 	conn = get_db_connection()
 	stmt = "select * from crm_shap;"
 	stmt2="select * from crm_input;"
