@@ -1,4 +1,5 @@
 from urllib import response
+from urllib.parse import urlparse
 from flask import Flask, render_template, request,jsonify,url_for, make_response, redirect
 import cv2
 import numpy as np
@@ -25,8 +26,21 @@ img_size=100
 app = Flask(__name__)
 
 def get_db_connection():
-    conn = psycopg2.connect(host='localhost', database='thesis_db', user='nijelp', password='master')
-    return conn
+	result = urlparse("postgres://labzjmuybavxum:a664e5263fa20597478961f77ffeabb95fb7e66c458c678be6de323c7545edc8@ec2-34-199-68-114.compute-1.amazonaws.com:5432/d3knnbpdmj3j26")
+	username = result.username
+	password = result.password
+	database = result.path[1:]
+	hostname = result.hostname
+	port = result.port
+	# conn = psycopg2.connect(host='localhost', database='thesis_db', user='nijelp', password='master')
+	conn = psycopg2.connect(
+		database = database,
+		user = username,
+		password = password,
+		host = hostname,
+		port = port
+	)
+	return conn
 
 
 
