@@ -1,23 +1,16 @@
 from urllib import response
 from urllib.parse import urlparse
 from flask import Flask, render_template, request,jsonify,url_for, make_response, redirect
-import cv2
 import numpy as np
 import pandas as pd
 import base64
-from PIL import Image
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import io
 from io import BytesIO
 import re
-import urllib.parse
 import psycopg2
-import skimage.segmentation
-from glob import glob
-from tqdm import tqdm
-import os
 import shap
 
 
@@ -32,14 +25,14 @@ def get_db_connection():
 	database = result.path[1:]
 	hostname = result.hostname
 	port = result.port
-	# conn = psycopg2.connect(host='localhost', database='thesis_db', user='nijelp', password='master')
-	conn = psycopg2.connect(
-		database = database,
-		user = username,
-		password = password,
-		host = hostname,
-		port = port
-	)
+	conn = psycopg2.connect(host='localhost', database='thesis_db', user='nijelp', password='master')
+	# conn = psycopg2.connect(
+	# 	database = database,
+	# 	user = username,
+	# 	password = password,
+	# 	host = hostname,
+	# 	port = port
+	# )
 	return conn
 
 
