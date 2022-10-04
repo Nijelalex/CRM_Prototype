@@ -54,7 +54,7 @@ ipython==7.32.0
 ipywidgets==7.6.5
 itsdangerous==2.0.1
 jellyfish==0.9.0
-Jinja2==2.11.3
+Jinja2
 jinja2-time
 joblib==1.1.0
 jsonschema==4.4.0
