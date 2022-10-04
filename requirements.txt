@@ -24,3 +24,4 @@ requests
 shap==0.41.0
 psycopg2-binary==2.9.3
 gunicorn
+MarkupSafe
