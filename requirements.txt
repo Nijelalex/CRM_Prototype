@@ -113,13 +113,6 @@ pyls-spyder==0.4.0
 PyNaCl
 pyOpenSSL
 pyparsing==3.0.7
-PyQt5
-pyqt5-plugins
-PyQt5-Qt5
-PyQt5-sip
-pyqt5-tools
-PyQtWebEngine
-PyQtWebEngine-Qt5
 pyrsistent==0.18.1
 PySocks
 python-dateutil==2.8.2
