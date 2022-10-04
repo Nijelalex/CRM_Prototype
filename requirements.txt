@@ -9,7 +9,6 @@ itsdangerous==0.24
 Jinja2==2.9.6
 Mako==1.0.6
 packaging
-psycopg2==2.7.1
 pyparsing
 python-editor==1.0.3
 six==1.10.0
