@@ -25,14 +25,14 @@ def get_db_connection():
 	database = result.path[1:]
 	hostname = result.hostname
 	port = result.port
-	conn = psycopg2.connect(host='localhost', database='thesis_db', user='nijelp', password='master')
-	# conn = psycopg2.connect(
-	# 	database = database,
-	# 	user = username,
-	# 	password = password,
-	# 	host = hostname,
-	# 	port = port
-	# )
+	# conn = psycopg2.connect(host='localhost', database='thesis_db', user='nijelp', password='master')
+	conn = psycopg2.connect(
+		database = database,
+		user = username,
+		password = password,
+		host = hostname,
+		port = port
+	)
 	return conn
 
 
