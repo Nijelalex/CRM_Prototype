@@ -62,6 +62,7 @@ def index():
 def details():
 	print('details')
 	cif = request.get_json(force=True)
+	print(cif)
 	fit_model=pd.read_pickle('model/fit_model.pkl')
 	conn = get_db_connection()
 	stmt = "select * from crm_shap;"
