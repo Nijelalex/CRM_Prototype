@@ -737,7 +737,7 @@
         check=$(".tableauViz").attr('src');
         detstatus=$("#td-" + cif).text();
         detdescription=$("#td-" + cif).prop('title');
-        
+        console.log(cif)
         
         $.post(document.location.origin + "/details", JSON.stringify(cif), function(response){
             // alert('Shap Generated') 
