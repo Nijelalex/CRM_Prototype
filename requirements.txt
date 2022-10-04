@@ -88,7 +88,7 @@ pandas==1.4.3
 pandocfilters
 paramiko
 parso==0.7.0
-pathspec==0.7.0
+pathspec
 pexpect
 pickleshare
 Pillow==9.0.1
