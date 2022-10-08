@@ -20,12 +20,19 @@ app = Flask(__name__)
 
 def get_db_connection():
 	db_uri = os.environ.get('DB_URI', None)
-	result = urlparse(db_uri)
-	username = result.username
-	password = result.password
-	database = result.path[1:]
-	hostname = result.hostname
-	port = result.port
+	if db_uri is None: #For Local PostgreSQL
+		username = 'nijelp'
+		password = 'master'
+		database = 'thesis_db'
+		hostname = 'localhost'
+		port = '5432'
+	else: #For Heroku PostgreSQL
+		result = urlparse(db_uri)
+		username = result.username
+		password = result.password
+		database = result.path[1:]
+		hostname = result.hostname
+		port = result.port
 	# conn = psycopg2.connect(host='localhost', database='thesis_db', user='nijelp', password='master')
 	conn = psycopg2.connect(
 		database = database,
@@ -57,6 +64,10 @@ def index():
 	
 	# return render_template(("index.html"),tables=[datacsv.to_html(classes='data')], titles=datacsv.columns.values)
 
+@app.route("/about")
+def about():
+
+	return render_template('About.html')
 
 
 @app.route("/details", methods=["POST"])
