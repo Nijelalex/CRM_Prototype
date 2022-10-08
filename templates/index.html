@@ -271,7 +271,7 @@
             <div id="popdetails">CUSTOMER DETAILS</div>
             <a href="#" id="close">x</a> 
             <div style="font-weight: 600; padding: 5px;">Customer Number : <span id="custname"></span></div>   
-            <div style="width:75%; float: left;"><div style="text-align: center;"><img id="image-selector" src=""></div>
+            <div style="width:75%; float: left;"><div style="text-align: center;"><img id="image-selector" src="{{plot_url}}"></div>
             <div style="font-size:9px; text-align: right;"> * The <span style="color: rgb(255,13,87)">red</span> signifies positive impact on conversion and <span style="color: rgb(30,136,229)">blue</span>, negative impact</div>
                 <div id="bi_dashboard">
                     <div class='tableauPlaceholder' id='viz1661978434209' style='position: relative; height:330px'><noscript><a href='#'><img
@@ -314,6 +314,7 @@
                     <textarea id="leadtext" name="leaddesc" rows="4" cols="50" style="width:240px;"></textarea>
                     <div style="text-align:center;"><button id="updatedb" class="btn btn-sm btn-primary btn-lead">Update Lead Status</button></div>
                 </div>
+                <div id="factordiv"></div>
         </div>
         
         <div class="popup opacity-provider">
@@ -750,9 +751,21 @@
         
         $.post(document.location.origin + "/details", JSON.stringify(cif), function(response){
             // alert('Shap Generated') 
-            // console.log(response);
-            newsrc="data:image/png;base64," + response
+            console.log(response);
+            newsrc="data:image/png;base64," + response['plot_url']
 	 		$('#image-selector').attr("src", newsrc);
+            factorhtml="<tr><th>Lead Influencers</tr></th>";
+            console.log(response['toppositive'].length);
+            for (i=0; i<response['toppositive'].length;i++) {
+                factorhtml=factorhtml+"<tr><td><i class='fas fa-plus-square positive'></i>" + response['toppositive'][i] +"</td></tr>";
+
+            }
+            for (i=0; i<response['topnegative'].length;i++) {
+                factorhtml=factorhtml+"<tr><td><i class='fas fa-minus-square negative'></i>" + response['topnegative'][i] +"</td></tr>";
+
+            }
+            $('#factordiv').html(factorhtml);
+
             check=$(".tableauViz").attr('src');
             detstatus=detstatus.substring(1);
             $("#statusid option:contains(" + detstatus + ")").attr('selected', 'selected');
