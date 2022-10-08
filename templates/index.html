@@ -41,22 +41,6 @@
 			font-size: 15px;	
 			}
 
-            .positive{
-                color: rgb(128,255,128);
-                font-size: 12px;
-                text-indent: 5px;
-                margin-left:5px;
-                margin-right: 5px;
-            }
-
-            .negative{
-                color: rgb(255,106,106);
-                font-size: 12px;
-                text-indent: 5px;
-                margin-left:5px;
-                margin-right: 5px;
-            }
-
 
 			.predict-button{
 			transition-duration: 0.4s;
@@ -255,7 +239,7 @@
 		
 		<!-- Customized Bootstrap Stylesheet -->
 		<link href="{{url_for('static', filename='/css/bootstrap.min.css')}}" rel="stylesheet">
-        <link rel="shortcut icon" href="https://www.mdx.ac.ae/favicon.ico">
+        <link rel="shortcut icon" href="{{url_for('static', filename='/img/favicon.ico')}}">
 		<!-- Template Stylesheet -->
 		<link href="{{url_for('static', filename='/css/style.css')}}" rel="stylesheet">
 		<!-- JavaScript Libraries -->
@@ -777,7 +761,7 @@
 
             }
             for (i=0; i<response['topnegative'].length;i++) {
-                factorhtml=factorhtml+"<tr><td><i class='fas fa-minus-square negative'></i>" + response['topnegative'][i] +"</td></tr>";
+                factorhtml=factorhtml+"<tr><td><i class='fas fa-minus-square'></i>" + response['topnegative'][i] +"</td></tr>";
 
             }
             $('#factordiv').html(factorhtml);
