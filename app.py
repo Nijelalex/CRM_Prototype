@@ -151,7 +151,7 @@ def lead():
 			conn.close()
 	data=request.get_json(force=True, silent=True, cache=False)
 	
-	return data
+	return 'Leads_Updated'
 
 
 
