@@ -61,7 +61,7 @@ def index():
 @app.route("/details", methods=["POST"])
 def details():
 	print('details')
-	cif = request.get_json(force=True)
+	cif = request.get_json(force=True,silent=True, cache=False)
 	print(cif)
 	fit_model=pd.read_pickle('model/fit_model.pkl')
 	conn = get_db_connection()
@@ -121,7 +121,7 @@ def details():
 def lead():
 	print('lead')
 	message = request.get_json(force=True)
-	
+	print(message)
 
 	sql = """ UPDATE "crm_input"
                 SET "Status" = %s,
