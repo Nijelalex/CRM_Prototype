@@ -70,14 +70,14 @@ def details():
 	data_df = pd.io.sql.read_sql(stmt, conn)
 	data_crm = pd.io.sql.read_sql(stmt2, conn)
 	# indexpos=data_df.index[data_df['Customer']==int(cif)].tolist()
-	intcif=int(cif)
-	indexpos=data_df['Customer'].loc[lambda x:x==intcif].index
+	# intcif=int(cif)
+	# indexpos=data_df['Customer'].loc[lambda x:x==intcif].index
 
 	explainer = shap.TreeExplainer(fit_model.best_estimator_)
 	plt.figure()
 	data_df=data_df.drop("Customer", axis=1)
 	shap_values = explainer.shap_values(data_df)
-	shap.force_plot(explainer.expected_value, shap_values[indexpos[0]], data_df.iloc[indexpos[0]], text_rotation=15, matplotlib=True, show=False) 
+	shap.force_plot(explainer.expected_value, shap_values[0], data_df.iloc[0], text_rotation=15, matplotlib=True, show=False) 
 	buf = BytesIO()
 	plt.tight_layout()
 	plt.title("SHAP Force Plot")
