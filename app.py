@@ -77,7 +77,7 @@ def details():
 	plt.figure()
 	data_df=data_df.drop("Customer", axis=1)
 	shap_values = explainer.shap_values(data_df)
-	shap.force_plot(explainer.expected_value, shap_values[0], data_df.iloc[0], text_rotation=15, matplotlib=True, show=False) 
+	shap.force_plot(explainer.expected_value, shap_values[indexpos[0]], data_df.iloc[indexpos[0]], text_rotation=15, matplotlib=True, show=False) 
 	buf = BytesIO()
 	plt.tight_layout()
 	plt.title("SHAP Force Plot")
