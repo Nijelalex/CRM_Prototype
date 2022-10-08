@@ -17,6 +17,7 @@ import os
 img_size=100
 
 app = Flask(__name__)
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 
 def get_db_connection():
 	db_uri = os.environ.get('DB_URI', None)
