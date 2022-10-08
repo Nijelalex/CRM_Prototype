@@ -12,14 +12,15 @@ from io import BytesIO
 import re
 import psycopg2
 import shap
-
+import os
 
 img_size=100
 
 app = Flask(__name__)
 
 def get_db_connection():
-	result = urlparse("postgres://labzjmuybavxum:a664e5263fa20597478961f77ffeabb95fb7e66c458c678be6de323c7545edc8@ec2-34-199-68-114.compute-1.amazonaws.com:5432/d3knnbpdmj3j26")
+	db_uri = os.environ.get('DB_URI', None)
+	result = urlparse(db_uri)
 	username = result.username
 	password = result.password
 	database = result.path[1:]
