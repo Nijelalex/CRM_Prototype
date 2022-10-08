@@ -2,6 +2,8 @@
 
 This web application has been created as part of MSc Datascience thesis in Flask. Backend of the applicaiton is PostgreSQL. 
 
+The completed web application has been deployed in Heroku: https://crm-prototype-thesis.herokuapp.com/
+
 The application consists of 2 pages - 
 1. The Dashboard page which shows the list of leads generated from the propensity model. The leads are sorted on descending order based on the propensity score. Each Lead has a show detail button which provides more information about the lead and an option for front line to provide feedback on the lead.
 2. The About Application page which details about the Thesis topic and artifacts.
