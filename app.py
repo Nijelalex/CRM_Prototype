@@ -61,7 +61,7 @@ def index():
 @app.route("/details", methods=["POST"])
 def details():
 	print('details')
-	cif = request.get_json(force=True,silent=True, cache=False)
+	cif = request.get_json(force=True, silent=True, cache=False)
 	print(cif)
 	fit_model=pd.read_pickle('model/fit_model.pkl')
 	conn = get_db_connection()
@@ -69,7 +69,7 @@ def details():
 	stmt2="select * from crm_input;"
 	data_df = pd.io.sql.read_sql(stmt, conn)
 	data_crm = pd.io.sql.read_sql(stmt2, conn)
-	# indexpos=data_df.index[data_df['Customer']==int(cif)].tolist()
+	indexpos=data_df.index[data_df['Customer']==int(cif)].tolist()
 	# intcif=int(cif)
 	# indexpos=data_df['Customer'].loc[lambda x:x==intcif].index
 
@@ -120,7 +120,7 @@ def details():
 @app.route("/lead", methods=["POST"])
 def lead():
 	print('lead')
-	message = request.get_json(force=True)
+	message = request.get_json(force=True, silent=True, cache=False)
 	print(message)
 
 	sql = """ UPDATE "crm_input"
