@@ -93,6 +93,22 @@ a{
     transition: 0.5s;
 }
 
+.positive{
+    color: rgb(128,255,128);
+    font-size: 12px;
+    text-indent: 5px;
+    margin-left:5px;
+    margin-right: 5px;
+}
+
+.negative{
+    color: rgb(255,106,106);
+    font-size: 12px;
+    text-indent: 5px;
+    margin-left:5px;
+    margin-right: 5px;
+}
+
 @media (min-width: 992px) {
     .sidebar {
         margin-left: 0;

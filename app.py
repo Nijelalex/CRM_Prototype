@@ -90,6 +90,12 @@ def details():
 	data_df=data_df.drop("Customer", axis=1)
 	shap_values = explainer.shap_values(data_df)
 	shap.force_plot(explainer.expected_value, shap_values[indexpos[0]], data_df.iloc[indexpos[0]], text_rotation=15, matplotlib=True, show=False) 
+	features = data_df.columns
+	id_sorted = np.argsort(shap_values[indexpos[0]])
+	toppositive=features[id_sorted[:-4:-1]].tolist()
+	topnegative=features[id_sorted[:3]].tolist()
+	# print(top3_positive)
+	# # print(top3_negative)
 	buf = BytesIO()
 	plt.tight_layout()
 	plt.title("SHAP Force Plot")
@@ -100,7 +106,7 @@ def details():
 			bbox_inches="tight",
 			)
 	plot_url = base64.b64encode(buf.getbuffer()).decode("ascii")
-	return plot_url
+	return jsonify(plot_url=plot_url,toppositive=toppositive,topnegative=topnegative)
 	# message = request.get_json(force=True)
 	# encoded = message['image']
 	# decoded = base64.b64decode(encoded)
