@@ -149,7 +149,7 @@ def lead():
 	finally:
 		if conn is not None:
 			conn.close()
-	data=request.get_json()
+	data=request.get_json(force=True, silent=True, cache=False)
 	
 	return data
 
