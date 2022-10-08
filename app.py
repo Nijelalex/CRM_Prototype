@@ -1,37 +1,38 @@
 from urllib import response
 from urllib.parse import urlparse
 from flask import Flask, render_template, request,jsonify,url_for, make_response, redirect
-import cv2
 import numpy as np
 import pandas as pd
 import base64
-from PIL import Image
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import io
 from io import BytesIO
 import re
-import urllib.parse
 import psycopg2
-import skimage.segmentation
-from glob import glob
-from tqdm import tqdm
-import os
 import shap
-
+import os
 
 img_size=100
 
 app = Flask(__name__)
 
 def get_db_connection():
-	result = urlparse("postgres://labzjmuybavxum:a664e5263fa20597478961f77ffeabb95fb7e66c458c678be6de323c7545edc8@ec2-34-199-68-114.compute-1.amazonaws.com:5432/d3knnbpdmj3j26")
-	username = result.username
-	password = result.password
-	database = result.path[1:]
-	hostname = result.hostname
-	port = result.port
+	db_uri = os.environ.get('DB_URI', None)
+	if db_uri is None: #For Local PostgreSQL
+		username = 'nijelp'
+		password = 'master'
+		database = 'thesis_db'
+		hostname = 'localhost'
+		port = '5432'
+	else: #For Heroku PostgreSQL
+		result = urlparse(db_uri)
+		username = result.username
+		password = result.password
+		database = result.path[1:]
+		hostname = result.hostname
+		port = result.port
 	# conn = psycopg2.connect(host='localhost', database='thesis_db', user='nijelp', password='master')
 	conn = psycopg2.connect(
 		database = database,
@@ -63,20 +64,27 @@ def index():
 	
 	# return render_template(("index.html"),tables=[datacsv.to_html(classes='data')], titles=datacsv.columns.values)
 
+@app.route("/about")
+def about():
+
+	return render_template('About.html')
 
 
 @app.route("/details", methods=["POST"])
 def details():
 	print('details')
-	cif = request.get_json(force=True)
-	fit_model=pd.read_pickle(r'D:/University/CST4090 - Thesis/Propensity Model/thesis-propensity-model/data/06_models/fit_model.pkl')
+	cif = request.get_json(force=True, silent=True, cache=False)
+	print(cif)
+	fit_model=pd.read_pickle('model/fit_model.pkl')
 	conn = get_db_connection()
 	stmt = "select * from crm_shap;"
 	stmt2="select * from crm_input;"
 	data_df = pd.io.sql.read_sql(stmt, conn)
 	data_crm = pd.io.sql.read_sql(stmt2, conn)
 	indexpos=data_df.index[data_df['Customer']==int(cif)].tolist()
-	
+	# intcif=int(cif)
+	# indexpos=data_df['Customer'].loc[lambda x:x==intcif].index
+
 	explainer = shap.TreeExplainer(fit_model.best_estimator_)
 	plt.figure()
 	data_df=data_df.drop("Customer", axis=1)
@@ -124,8 +132,8 @@ def details():
 @app.route("/lead", methods=["POST"])
 def lead():
 	print('lead')
-	message = request.get_json(force=True)
-	
+	message = request.get_json(force=True, silent=True, cache=False)
+	print(message)
 
 	sql = """ UPDATE "crm_input"
                 SET "Status" = %s,
@@ -153,9 +161,9 @@ def lead():
 	finally:
 		if conn is not None:
 			conn.close()
-	data=request.get_json()
+	data=request.get_json(force=True, silent=True, cache=False)
 	
-	return data
+	return 'Leads_Updated'
 
 
 

@@ -167,8 +167,8 @@
                     background:white;
                 z-index:101;   /*must be greater than the opacity provider*/   
                 position:fixed;  
-                top:15%; 
-                left:20%; /*centers the div*/
+                top:100px; 
+                left:25%; /*centers the div*/
             }
             #popdetails
             {
@@ -242,6 +242,7 @@
         <link rel="shortcut icon" href="https://www.mdx.ac.ae/favicon.ico">
 		<!-- Template Stylesheet -->
 		<link href="{{url_for('static', filename='/css/style.css')}}" rel="stylesheet">
+        <link href="{{url_for('static', filename='/css/about.css')}}" rel="stylesheet">
 		<!-- JavaScript Libraries -->
 		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -345,8 +346,8 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="#" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                    <a href="{{ url_for('about') }}" class="nav-item nav-link"><i class="fa fa-info-circle me-2"></i>About Application</a>
+                    <a href="/" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="#" class="nav-item nav-link active"><i class="fa fa-info-circle me-2"></i>About Application</a>
                 </div>
             </nav>
 			</div>
@@ -443,232 +444,66 @@
                 </div>
             </nav>
             <!-- Navbar End -->
+            <table id="myTable" class="table text-start align-middle table-bordered table-hover mb-0">
+                <thead>
+                    <tr class="text-dark">
+                        <th class="tablehead" scope="col">About the application</th>   
+                    </tr>
+                </thead>
+                <tbody>    
+                    <tr>
+                        <td style="font-size: 12px; font-weight: bold;">
+                            <div style="text-align:right;font-size:13px;color:black;font-weight: bold;margin:6px;">Developer: Nijel Alex (M00793404)</div>
+                            The research is on the use of modeling in the Banking, Financial service, and insurance (BFSI) industry to identify customers with a higher probability (propensity) to use the financial product or service. 
+                            Banks and other Financial Service organizations traditionally sell their financial products and services using customer outreach marketing campaigns via generic EDMs and calls. The generic nature of the campaign leads to high marketing costs and low sales conversion since the complete customer base is targeted regardless of whether they require the product or not. 
+                            The proposed propensity model is expected to provide -
+                            <span>
+                                <ul class="fa-ul">    
+                                <li><i class="fa-li fa fa-square"></i><span class="highdes">Propensity Score</span> - Likelihood of the customers to purchase the financial product or service by analyzing customer-level data like transaction types and history, product holdings, demographics, etc in an effective way. Thus, the customers with higher propensity scores can be targetted as leads leading to higher sales conversion and reduced marketing costs.</li>
+                                <li><i class="fa-li fa fa-square"></i><span class="highdes">Explainability of the Lead</span> - What are the factors/drivers for choosing the lead? This will help sales in pitching for cross-sell </li>
+                                <li><i class="fa-li fa fa-square"></i><span class="highdes">Scalability</span> - A framework needs to be used so that the solution can be scaled at an enterprise-level </li> 
+                                </ul>
+                            </span>
+                            A benchmarking process will be used to identify the best classification machine learning algorithms to predict the propensity scores. The expected outcome at a high level is an end-to-end analytic product or solution which will enable the product managers/relationship managers to identify the best customers and the main drivers to pitch for the sales of the product.
+                            <div style="margin-top:10px; color: black;">
+                                GitHub links
+                            </div><span><a href="https://github.com/Nijelalex/Propensity_Model">Propensity Model Repository</a></span><br><span><a href="https://github.com/Nijelalex/CRM_Prototype">CRM Prototype Repository</a></span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
 
-			
-            <!-- Sale & Revenue Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4 statsbox">
-                            <i class="fa fa-chart-line fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Sales (Today)</p>
-                                <h6 class="mb-0">$1234</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4 statsbox">
-                            <i class="fa fa-chart-bar fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Sales MTD</p>
-                                <h6 class="mb-0">$1234</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4 statsbox">
-                            <i class="fa fa-chart-area fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Revenue (Today)</p>
-                                <h6 class="mb-0">$1234</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4 statsbox">
-                            <i class="fa fa-chart-pie fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Revenue MTD</p>
-                                <h6 class="mb-0">$1234</h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-				<div style="font-size:10px;">* Dummy Numbers</div>
-            </div>
-            <!-- Sale & Revenue End -->
 
-            <!-- Recent Sales Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="bg-light text-center rounded p-4">
-                    <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h6 class="mb-0">Term Deposit campaign</h6>
-                        
-                    </div>
-                    <div class="table-responsive">
-                        <table id="myTable" class="table text-start align-middle table-bordered table-hover mb-0">
+                    <table id="myTable2" class="table text-start align-middle table-bordered table-hover mb-0">
+                        <thead>
+                            <tr class="text-dark">
+                                <th class="tablehead" scope="col">Infrastructure</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>    
+                            <tr>
+                                <td style="text-align: center;"><img class="infraimg" src="{{url_for('static', filename='/img/Architecture.jpg')}}"></td>
+                                
+                            </tr>
+                            </tbody>
+                        </table>    
+
+                        <table id="myTable3" class="table text-start align-middle table-bordered table-hover mb-0">
                             <thead>
                                 <tr class="text-dark">
-                                    <th class="tablehead" scope="col">Customer Number</th>
-                                    <th class="tablehead" scope="col">Default</th>
-                                    <th class="tablehead" scope="col">Housing</th>
-                                    <th class="tablehead" scope="col">Loan</th>
-                                    <th class="tablehead" scope="col">Score</th>
-                                    <th class="tablehead" scope="col">Status</th>
-                                    <th class="tablehead" scope="col">Details</th>
+                                    <th class="tablehead" scope="col">Research Pipeline (built in Kedro framework)</th>
+                                    
                                 </tr>
                             </thead>
-                            <tbody>
-                                {% for input in crm_input %}
-                                <tr class="{{ loop.cycle('odd', 'even') }}">
-                                    <td>{{ input[0] }}</td>
-                                    <td>{{ input[7] }}</td>
-                                    <td>{{ input[8] }}</td>
-                                    <td>{{ input[9] }}</td>
-                                    <td>{{ '%0.4f'| format(input[2]|float) }}</td>
-                                    <td title="{{ input[25] }}" id="td-{{ input[0] }}"><span class="{{ input[26] }} statusround">&nbsp;</span>{{ input[24] }}</td>
-                                    <td><button id="{{ input[0] }}-button" class="btn btn-sm btn-primary btn-details">Show Details</button></td>
-                                
+                            <tbody>    
+                                <tr>
+                                    <td style="text-align: center;"><img class="pipeimg" src="{{url_for('static', filename='/img/kedro-pipeline1.png')}}"></td>
+                                    
                                 </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <!-- Recent Sales End -->
+                                </tbody>
+                            </table>
 
-
-            <!-- Widgets Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-                    <div class="col-sm-12 col-md-6 col-xl-4">
-                        <div class="h-100 bg-light rounded p-4">
-                            <div class="d-flex align-items-center justify-content-between mb-2">
-                                <h6 class="mb-0">Messages</h6>
-                                <a href="">Show All</a>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-3">
-                                <img class="rounded-circle flex-shrink-0" src="{{url_for('static', filename='/img/CRMUser.jpg')}}" alt="" style="width: 40px; height: 40px;">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-0">Jhon Doe</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                    <span>Short message goes here...</span>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-3">
-                                <img class="rounded-circle flex-shrink-0" src="{{url_for('static', filename='/img/CRMUser.jpg')}}" alt="" style="width: 40px; height: 40px;">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-0">Jhon Doe</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                    <span>Short message goes here...</span>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-3">
-                                <img class="rounded-circle flex-shrink-0" src="{{url_for('static', filename='/img/CRMUser.jpg')}}" alt="" style="width: 40px; height: 40px;">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-0">Jhon Doe</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                    <span>Short message goes here...</span>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center pt-3">
-                                <img class="rounded-circle flex-shrink-0" src="{{url_for('static', filename='/img/CRMUser.jpg')}}" alt="" style="width: 40px; height: 40px;">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-0">Jhon Doe</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                    <span>Short message goes here...</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-xl-4">
-                        <div class="h-100 bg-light rounded p-4">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Calender</h6>
-                                <a href="">Show All</a>
-                            </div>
-                            <div id="calender"></div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-xl-4">
-                        <div class="h-100 bg-light rounded p-4">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">To Do List</h6>
-                                <a href="">Show All</a>
-                            </div>
-                            <div class="d-flex mb-2">
-                                <input class="form-control bg-transparent" type="text" placeholder="Enter task">
-                                <button type="button" class="btn btn-primary ms-2">Add</button>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-2">
-                                <input class="form-check-input m-0" type="checkbox">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span>Short task goes here...</span>
-                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-2">
-                                <input class="form-check-input m-0" type="checkbox">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span>Short task goes here...</span>
-                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-2">
-                                <input class="form-check-input m-0" type="checkbox" checked>
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span><del>Short task goes here...</del></span>
-                                        <button class="btn btn-sm text-primary"><i class="fa fa-times"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-2">
-                                <input class="form-check-input m-0" type="checkbox">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span>Short task goes here...</span>
-                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center pt-2">
-                                <input class="form-check-input m-0" type="checkbox">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span>Short task goes here...</span>
-                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Widgets End -->
-
-
-            <!-- Footer Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="bg-light rounded-top p-4">
-                    <div class="row">
-                        <div class="col-12 col-sm-6 text-center text-sm-start">
-                            &copy; <a href="#">Your Site Name</a>, All Right Reserved. 
-                        </div>
-                        <div class="col-12 col-sm-6 text-center text-sm-end">
-                            <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                            Designed By <a href="https://htmlcodex.com">HTML Codex</a>
-                        </br>
-                        Distributed By <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Footer End -->
         </div>
 		<!--Content End-->
 	 <!-- Back to Top -->
@@ -679,34 +514,7 @@
 
 <script>
     $(document).ready(function(){
-        $('#myTable').dataTable(
-        {   
-            dom: 'Bfrtip',
-            buttons: [
-                {
-                    extend: 'collection',
-                    text: 'Export',
-                    buttons: [
-                        'copy',
-                        'excel',
-                        'csv',
-                        'pdf',
-                        'print'
-                    ]
-                }
-            ],
-            order: [[4, 'desc'],[0, 'asc']],
-        }
-        );
         $('.loader').hide();
-    });
-</script> 
-<script>
-    $(document).ready(function(){
-        $("#close").click(function() {
-        $("div.popup").hide();
-        return false;
-    });
     });
 </script> 
 
@@ -719,102 +527,5 @@
     });
 </script>
 
-<script>
-    let base64Image;
-    $("#image-selector").change(function() {
-        let reader = new FileReader();
-        reader.onload = function(e) {
-            let dataURL = reader.result;
-            $('#selected-image').attr("src", dataURL);
-            base64Image = dataURL.replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
-            console.log(base64Image);
-        }
-        reader.readAsDataURL($("#image-selector")[0].files[0]);
-        $("#result").text("");
-        $("#probability").text("");
-
-    });
-
-    $(".btn-details").click(function(){
-            let message = "Details Invoked"
-        
-        cif=$(this).attr('id');
-        cif=cif.split("-")[0]
-        $("#custname").text(cif);
-        $("div.popup").show();
-        $(".loader").show();
-        check=$(".tableauViz").attr('src');
-        detstatus=$("#td-" + cif).text();
-        detdescription=$("#td-" + cif).prop('title');
-        console.log(cif)
-        
-        $.post(document.location.origin + "/details", JSON.stringify(cif), function(response){
-            // alert('Shap Generated') 
-            // console.log(response);
-            newsrc="data:image/png;base64," + response
-	 		$('#image-selector').attr("src", newsrc);
-            check=$(".tableauViz").attr('src');
-            detstatus=detstatus.substring(1);
-            $("#statusid option:contains(" + detstatus + ")").attr('selected', 'selected');
-            console.log(detstatus);
-            $('#leadtext').val(detdescription);
-            url=check;
-
-
-            
-            newurl=updateQueryStringParameter(check, 'Customer', cif)
-            $(".tableauViz").attr('src',newurl);    
-            $(".loader").hide();
-        });
-    });
-
-
-    function updateQueryStringParameter(uri, key, value) {  
-            if (uri==undefined)
-            {
-                uri="http://public.tableau.com/views/ThesisDoc/Dashboard1?:embed=y&:showVizHome=no&:host_url=https%3A%2F%2Fpublic.tableau.com%2F&:embed_code_version=3&:tabs=no&:toolbar=yes&:animate_transition=yes&:display_static_image=no&:display_spinner=no&:display_overlay=yes&:display_count=yes&:language=en-US&Customer=110008385&:loadOrderID=0"
-
-            }
-            var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-            var separator = uri.indexOf('?') !== -1 ? "&" : "?";
-            if (uri.match(re)) {
-                return uri.replace(re, '$1' + key + "=" + value + '$2');
-            }
-            else {
-                return uri + separator + key + "=" + value;
-            }
-        }
-	
-
-        $(".btn-lead").click(function(){
-            let obj = new Object
-            obj.status=$('#statusid option:selected').text();
-            obj.details=$("#leadtext").val();
-            obj.customer=$("#custname").text()
-        
-        
-        $.post(document.location.origin + "/lead", JSON.stringify(obj), function(response){
-            $("div.popup").hide();
-            alert('Lead details are updated!')
-        });
-    });
-	// $("#edge-button").click(function(){
-    //         let message = {
-    //         image: base64Image
-    //     }
-	// 	$('.loader').show()
-	// 	$('#statusdiv').html('6 Edge Detections Performed (Sobel, Canny, Laplace, Prewitt, Robert,Scharr)');
-    //     console.log(message);
-    //     $.post(document.location.origin + "/edge", JSON.stringify(message), function(response){
-	// 	$('.loader').hide()	
-	// 	console.log(response);
-	// 		newsrc="data:image/png;base64," + response
-	// 		$('#result-image').attr("src", newsrc);
-			
-    //     });
-    // });
-	
-	
-</script>
 
 </html>
